@@ -17,7 +17,7 @@ def main():
         st.markdown("App to predict taxi prices, type in your trip distance")
         with st.form("taxi_data"):
             trip_distance = st.number_input(
-                "Trip Distance (km)", min_value=1, max_value=60
+                "Trip Distance (km)", min_value=1.0, max_value=60.0
             )
             day_of_week = st.selectbox("Day_of_Week", ["Weekday", "Weekend"])
             passanger_count = st.selectbox("Passenger_Count", [1, 2, 3, 4])
