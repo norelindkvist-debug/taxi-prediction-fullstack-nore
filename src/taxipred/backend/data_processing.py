@@ -1,7 +1,7 @@
 from taxipred.utils.constants import COMPLETED_DATA_PATH
 import pandas as pd
 import json
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, model_validator
 from typing import Literal
     
 class TaxiInput(BaseModel):
@@ -13,24 +13,12 @@ class TaxiInput(BaseModel):
 
     Trip_Duration_Minutes: float | None = None
 
+    # I took help from Ai with @model_validator and I took help with the calculation.
     @model_validator(mode="after")
     def calculate_trip_duration(self):
         AVG_SPEED_KMH = 60.0
         self.Trip_Duration_Minutes = (self.Trip_Distance_km / AVG_SPEED_KMH) * 60
         return self
-
-    #I did this part with help of Ai so I can type in example wEeKdAy and it still works, before I needed to type the exact string but now i can have capital and normal letters.
-    @field_validator(
-        "Day_of_Week",
-        "Traffic_Conditions",
-        "Weather",
-        mode="before"
-    )
-    @classmethod
-    def normalize_case(cls, value):
-        if isinstance(value, str):
-            return value.capitalize()
-        return value
     
 class TaxiData:
     def __init__(self):
